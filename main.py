@@ -2,9 +2,8 @@ import sys
 import urllib.request as request
 import configparser
 
-from classes import CPU
+from classes import CPU, algorithms
 from helpers.file import process
-
 
 def setup():
     if len(sys.argv) == 2:
@@ -21,8 +20,7 @@ def setup():
 
 def main():
     CPUs, processes = setup()
-    for proc in processes:
-        min(CPUs, key=lambda cpu: cpu.getFreeAt()).assign(proc)
+    algorithms.list_algorithm(CPUs, processes)
 
     for id, cpu in enumerate(CPUs):
         print('CPU nr. {} ends with {}'.format(id, cpu.getFreeAt()))
