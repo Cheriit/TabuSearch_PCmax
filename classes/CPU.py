@@ -22,5 +22,5 @@ class CPU():
 
 def drawChart(CPUs):
     times = [cpu.getFreeAt() for cpu in CPUs]
-    cpu_No = [str(id) for id, value in enumerate(CPUs)]
+    cpu_No = [str(id+1) for id, value in enumerate(CPUs)]
     draw_horizontal_bar_chart(cpu_No, times)
