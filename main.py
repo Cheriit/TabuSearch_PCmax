@@ -11,8 +11,10 @@ def setup():
         CPUCount, processes = process(f'./data/{format(sys.argv[1])}')
     else:
         request.urlretrieve(config['url'],
-                            config['path'])
-        CPUCount, processes = process('./data/PCMaxMachowiak.txt')
+                            config['dataDir']+config['defaultFilename'])
+        CPUCount, processes = process(
+            config['dataDir']+config['defaultFilename']
+        )
     CPUs = []
     for i in range(CPUCount):
         CPUs.append(CPU.CPU())
@@ -22,12 +24,14 @@ def setup():
 def main():
     CPUs, processes = setup()
     PCMax = algorithms.PCMax(CPUs, processes)
-    PCMax.list()
+    PCMax.lpt()
 
     for id, cpu in enumerate(CPUs):
         print('CPU nr. {} ends with {}'.format(id+1, cpu.getFreeAt()))
+
     print('Max value: {}'.format(
-        max(CPUs, key=lambda cpu: cpu.free_at).getFreeAt()))
+        max(CPUs, key=lambda cpu: cpu.free_at).getFreeAt())
+    )
     CPU.drawChart(CPUs)
 
 
