@@ -1,7 +1,7 @@
 import sys
 import configparser
 import random
-
+from classes import CPU
 from helpers.file import process
 
 
@@ -18,9 +18,27 @@ def main():
         else:
             min_process_len = int(config['minProcessLen'])
             max_process_len = int(config['maxProcessLen'])
-        for i in range(process_count):
-            output.write(str(random.randint(
-                min_process_len, max_process_len)) + "\n")
+
+        CPUs = []
+
+        for i in range(int(processors)):
+            CPUs.append(CPU.CPU())
+
+        for i in range(int(process_count) - int(processors)):
+            CPUs[i % len(CPUs)].assign(random.randint(min_process_len, max_process_len))
+
+        cpu_with_max_load = max(CPUs, key=lambda cpu: cpu.getFreeAt())
+        cpu_with_max_load.assign(1)
+        max_load = cpu_with_max_load.getFreeAt()
+
+        for cpu in CPUs:
+            if cpu.getFreeAt() < max_load:
+                cpu.assign(max_load - cpu.getFreeAt())
+            
+            for process in cpu.getProcesses():
+                output.write(str(process) + "\n")
+
+        CPU.drawChart(CPUs)
         output.close()
 
 
