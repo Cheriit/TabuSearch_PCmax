@@ -1,4 +1,3 @@
-
 class PCMax():
 
     def __init__(self, CPUs, processes):
