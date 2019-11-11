@@ -5,4 +5,5 @@ def process(file_path):
     processes = []
     for i in range(processNum):
         processes.append(int(file.readline()))
+    file.close()
     return CPUCount, processes

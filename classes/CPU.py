@@ -19,6 +19,10 @@ class CPU():
     def getUsage(self, max_time):
         return (self.free_at / max_time) * 100
 
+    def clear(self):
+        self.proc = []
+        self.free_at = 0
+
 
 def drawChart(CPUs):
     times = [cpu.getFreeAt() for cpu in CPUs]

@@ -8,3 +8,8 @@ class PCMax():
     def list(self):
         for proc in self.processes:
             min(self.CPUs, key=lambda cpu: cpu.getFreeAt()).assign(proc)
+
+    def lpt(self):
+        processes = sorted(self.processes, reverse=True)
+        for proc in processes:
+            min(self.CPUs, key=lambda cpu: cpu.getFreeAt()).assign(proc)
