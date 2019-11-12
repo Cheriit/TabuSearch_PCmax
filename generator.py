@@ -7,10 +7,10 @@ from helpers.file import process
 
 def main():
     if len(sys.argv) >= 4:
-        processors = sys.argv[2]
+        processors = int(sys.argv[2])
         process_count = int(sys.argv[3])
         output = open(config['dataDir']+sys.argv[1], "w")
-        output.write(processors + "\n")
+        output.write(str(processors) + "\n")
         output.write(str(process_count) + "\n")
         if len(sys.argv) == 6:
             min_process_len = int(sys.argv[4])
@@ -21,10 +21,10 @@ def main():
 
         CPUs = []
 
-        for i in range(int(processors)):
+        for i in range(processors):
             CPUs.append(CPU.CPU())
 
-        for i in range(int(process_count) - int(processors)):
+        for i in range(process_count - processors):
             CPUs[i % len(CPUs)].assign(random.randint(min_process_len, max_process_len))
 
         cpu_with_max_load = max(CPUs, key=lambda cpu: cpu.getFreeAt())

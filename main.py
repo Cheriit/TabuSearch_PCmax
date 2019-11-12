@@ -25,6 +25,9 @@ def main():
     CPUs, processes = setup()
     PCMax = algorithms.PCMax(CPUs, processes)
     PCMax.lpt()
+    
+    avarage_usage = sum(processes) / len(CPUs)
+    print("Avarage usage: {}".format(avarage_usage))
 
     for id, cpu in enumerate(CPUs):
         print('CPU nr. {} ends with {}'.format(id+1, cpu.getFreeAt()))
