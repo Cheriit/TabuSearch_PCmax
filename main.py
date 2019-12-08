@@ -35,6 +35,9 @@ def main():
     print('Max value: {}'.format(
         max(CPUs, key=lambda cpu: cpu.free_at).getFreeAt())
     )
+    print('Efficency: {}'.format(
+        max(CPUs, key=lambda cpu: cpu.free_at).getFreeAt()/avarage_usage
+    ))
     CPU.drawChart(CPUs)
 
 

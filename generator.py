@@ -25,7 +25,7 @@ def main():
             CPUs.append(CPU.CPU())
 
         for i in range(process_count - processors):
-            CPUs[i % len(CPUs)].assign(random.randint(min_process_len, max_process_len))
+            CPUs[random.randint(0,processors-1)].assign(random.randint(min_process_len, max_process_len))
 
         cpu_with_max_load = max(CPUs, key=lambda cpu: cpu.getFreeAt())
         cpu_with_max_load.assign(1)
