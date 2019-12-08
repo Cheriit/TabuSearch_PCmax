@@ -24,22 +24,16 @@ def setup():
 def main():
     CPUs, processes = setup()
     PCMax = algorithms.PCMax(CPUs, processes)
-    PCMax.lpt()
-    
-    avarage_usage = sum(processes) / len(CPUs)
-    print("Avarage usage: {}".format(avarage_usage))
-
-    for id, cpu in enumerate(CPUs):
-        print('CPU nr. {} ends with {}'.format(id+1, cpu.getFreeAt()))
-
-    print('Max value: {}'.format(
-        max(CPUs, key=lambda cpu: cpu.free_at).getFreeAt())
-    )
-    CPU.drawChart(CPUs)
+    solution = sum(processes)/len(CPUs)
+    print(f"Solution: {solution}")
+    best_eff = PCMax.tabu_search(int(tabu_param['generations']), int(tabu_param['tabu_len']), float(tabu_param['divider']))
+    print(f"Found best solution with efficiency {best_eff/solution} ({best_eff}/{solution})")
+    # CPU.drawChart(CPUs)
 
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('config.ini')
+    tabu_param = config['TABUSEARCH']
     config = config['DEFAULT']
     main()
