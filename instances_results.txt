@@ -1,3 +1,4 @@
+[Wyniki z katalogu OK]
 [M50]
     generations = 100000
     tabu_len = 100000
