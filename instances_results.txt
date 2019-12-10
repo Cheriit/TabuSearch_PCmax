@@ -1,0 +1,6 @@
+[M50]
+    generations = 100000
+    tabu_len = 100000
+    divider = 0.025
+    result = 150
+    expected = 150
