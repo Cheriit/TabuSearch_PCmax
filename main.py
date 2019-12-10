@@ -1,10 +1,14 @@
 import sys
 import urllib.request as request
 import configparser
+import signal
 
 from classes import CPU, algorithms
 from helpers.file import process
 
+def signal_handler(sig, frame):
+    print('Ctr+c - exit')
+    sys.exit(0)
 
 def setup():
     if len(sys.argv) == 2:
@@ -22,6 +26,7 @@ def setup():
 
 
 def main():
+    signal.signal(signal.SIGINT, signal_handler)
     CPUs, processes = setup()
     PCMax = algorithms.PCMax(CPUs, processes)
     solution = sum(processes)/len(CPUs)
