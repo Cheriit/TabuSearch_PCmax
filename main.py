@@ -21,7 +21,7 @@ def setup():
         )
     CPUs = []
     for i in range(CPUCount):
-        CPUs.append(CPU.CPU())
+        CPUs.append(CPU.CPU(i))
     return CPUs, processes
 
 
@@ -33,7 +33,7 @@ def main():
     print(f"Solution: {solution}")
     best_eff = PCMax.tabu_search(int(tabu_param['generations']), int(tabu_param['tabu_len']), float(tabu_param['divider']))
     print(f"Found best solution with efficiency {best_eff/solution} ({best_eff}/{solution})")
-    # CPU.drawChart(CPUs)
+    CPU.drawChart(CPUs)
 
 
 if __name__ == '__main__':
