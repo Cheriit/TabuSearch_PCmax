@@ -20,19 +20,13 @@ class PCMax():
         return max(self.CPUs, key=lambda cpu: cpu.free_at).getFreeAt()
 
     def generate_neighbours(self, cpu_num):
-        #usuwanie duplikatow -> poprzez wartosc k
         options = []
-        visited = set()
-        filtered = []
         for i in self.CPUs[:cpu_num]:
             for j in self.CPUs[-cpu_num:]:
                 if i != j:
                     for k in i.proc:
                         options.append((i.id, j.id, k))
-        for i,j,k in options:
-            if k not in visited:
-                visited.add(k)
-                filtered.append((i,j,k))
+        filtered = list(dict.fromkeys(options))
         shuffle(filtered)
         return filtered
 
@@ -43,41 +37,30 @@ class PCMax():
         
         for cpu in self.CPUs:
             cpu.clear()
-
         self.lpt()
         maximum = self.efficiency()
         print(f"Generated LPT solution: {maximum}")
 
         iterator = 0
         tabu_list = []
-
-        #
-        tabu_limit = 100
-        #
-
         cpu_num = ceil(len(self.CPUs)*divider)
+
         while iterator < generations:
             self.CPUs.sort(key=lambda cpu: cpu.free_at, reverse=True)
             options = self.generate_neighbours(cpu_num)
             best_option = 0
-           
-            print("tabu: " + str(tabu_list))
-            while options[best_option] in tabu_list:
-                print("TABU")
-                best_option += 1
 
-            print("option: " + str(options[best_option]))
+            while options[best_option] in tabu_list:
+                best_option += 1
+                if best_option == len(options):
+                    print("All moves are at Tabu List.")
+                    return maximum
 
             cpu_from = options[best_option][0]
             cpu_to = options[best_option][1]
             process = options[best_option][2]
-
-            cpu_from_obj_lst = [cpu for cpu in self.CPUs if cpu.id == cpu_from]
-            cpu_to_obj_lst =  [cpu for cpu in self.CPUs if cpu.id == cpu_to]
-            cpu_from_obj = cpu_from_obj_lst[0]
-            cpu_to_obj = cpu_to_obj_lst[0]
-            # self.CPUs[cpu_from].remove(process)
-            # self.CPUs[cpu_to].assign(process)
+            cpu_from_obj = [cpu for cpu in self.CPUs if cpu.id == cpu_from][0]
+            cpu_to_obj =  [cpu for cpu in self.CPUs if cpu.id == cpu_to][0]
             cpu_from_obj.remove(process)
             cpu_to_obj.assign(process)
 
@@ -88,6 +71,5 @@ class PCMax():
             tabu_list.append((cpu_to, cpu_from, process))
             if len(tabu_list) > tabu_limit:
                 del tabu_list[0]
-
             iterator += 1
         return maximum
