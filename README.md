@@ -1,6 +1,3 @@
-```
-    pip install -r requirements.txt
-```
 # Requirements:
 * python 3
 * virtualenv
