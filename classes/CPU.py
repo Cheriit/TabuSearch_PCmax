@@ -2,9 +2,11 @@ from helpers.charts import draw_horizontal_bar_chart
 
 
 class CPU():
-    def __init__(self):
+    def __init__(self, id):
         self.proc = []
         self.free_at = 0
+        self.id = id
+
 
     def assign(self, process):
         self.proc.append(process)
