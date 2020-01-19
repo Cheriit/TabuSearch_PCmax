@@ -53,8 +53,9 @@ class PCMax():
             while options[best_option] in tabu_list:
                 best_option += 1
                 if best_option == len(options):
-                    print("All moves are at Tabu List.")
-                    return maximum
+                    cpu_num+=1
+                    options = self.generate_neighbours(cpu_num)
+                    best_option = 0
 
             cpu_from = options[best_option][0]
             cpu_to = options[best_option][1]
@@ -72,4 +73,5 @@ class PCMax():
             if len(tabu_list) > tabu_limit:
                 del tabu_list[0]
             iterator += 1
+            
         return maximum
